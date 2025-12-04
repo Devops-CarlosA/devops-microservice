@@ -43,25 +43,6 @@ jobs:
         run: |
           terraform init
 
-      - name: Install Qlty CLI
-        run: |
-          curl -fsSL https://qlty.sh | bash
-          echo "$HOME/.qlty/bin" >> $GITHUB_PATH
-          export PATH="$HOME/.qlty/bin:$PATH"
-
-      - name: Run Qlty Analysis
-        run: |
-          export PATH="$HOME/.qlty/bin:$PATH"
-          qlty check --all --format json > qlty-results.json || true
-          echo "✅ Qlty analysis completed. Results saved in qlty-results.json"
-          cat qlty-results.json
-
-      - name: Upload Qlty Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: qlty-results
-          path: qlty-results.json
-
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v4
         with:
